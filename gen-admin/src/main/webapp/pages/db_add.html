@@ -1,0 +1,78 @@
+@layout("/common/_container.html",{title:"添加数据源",bg:"bg-white",js:["/assets/db_add.js"]}){
+
+<div class="layui-body-header">
+    <span class="layui-body-header-title">添加数据源</span>
+</div>
+
+<div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+    <ul class="layui-tab-title">
+        <li id="code_gen">代码生成</li>
+        <li id="template_config">模板配置</li>
+        <li id="db_config">数据库配置</li>
+        <li class="layui-this" id="add_db">添加数据源</li>
+    </ul>
+    <div class="layui-tab-content" style="height: 100px;">
+        <div class="layui-tab-item">加载中...</div>
+        <div class="layui-tab-item">加载中...</div>
+        <div class="layui-tab-item layui-show">
+            <div class="layui-fluid">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-xs12">
+                        <div class="layui-card">
+                            <div class="layui-card-body">
+                                <form class="layui-form" lay-filter="dbAddForm">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">名&nbsp;&nbsp;称*</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" name="dbName" lay-verify="required" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">类&nbsp;&nbsp;型*</label>
+                                        <div class="layui-input-block">
+                                            <select id="dataSourceId" name="dataSourceId" lay-filter="dataSourceId">
+                                                <option value="yw">业务</option>
+                                                <option value="dsj">大数据</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">驱&nbsp;&nbsp;动*</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" name="jdbcDriver" lay-verify="required" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">连&nbsp;&nbsp;接*</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" name="jdbcUrl" lay-verify="required" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">账&nbsp;&nbsp;号*</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" name="userName" lay-verify="required" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">密&nbsp;&nbsp;码</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" name="password" lay-verify="" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <div class="layui-input-block">
+                                            <button class="layui-btn" lay-filter="submitDb" lay-submit>提交</button>
+                                            <button type="reset" class="layui-btn layui-btn-primary" id="resetBtn">重置</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@}

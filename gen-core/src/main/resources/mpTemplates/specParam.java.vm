@@ -1,0 +1,36 @@
+package ${package.EntitySpecParams};
+
+import lombok.Data;
+import java.util.Date;
+import java.io.Serializable;
+import java.math.BigDecimal;
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+/**
+ * <p>
+ * $!{table.comment}
+ * </p>
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+@Data
+@ApiModel
+public class ${entity}Param implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+#foreach($field in ${table.fields})
+
+#if("$!field.comment" != "")
+    /**
+     * ${field.comment}
+     */
+    @ApiModelProperty(value="${field.comment}")
+#end
+    private ${field.propertyType} ${field.propertyName};
+#end
+
+}

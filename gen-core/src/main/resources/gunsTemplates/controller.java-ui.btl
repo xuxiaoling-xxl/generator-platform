@@ -1,0 +1,54 @@
+package ${controllerPackage};
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+<% var lowerEntityService = lowerEntity + 'Service'; %>
+
+/**
+ * ${tool.cleanWhite(table.comment)}控制器
+ *
+ * @author ${author}
+ * @Date ${tool.currentTime()}
+ */
+@Controller
+@RequestMapping("/${lowerEntity}")
+public class ${entity}Controller {
+
+    private String PREFIX = "/modular/system/${lowerEntity}";
+
+    /**
+     * 跳转到主页面
+     *
+     * @author ${author}
+     * @Date ${date}
+     */
+    @RequestMapping("")
+    public String index() {
+        return PREFIX + "/${lowerEntity}.html";
+    }
+
+    /**
+     * 新增页面
+     *
+     * @author ${author}
+     * @Date ${date}
+     */
+    @RequestMapping("/add")
+    public String add() {
+        return PREFIX + "/${lowerEntity}_add.html";
+    }
+
+    /**
+     * 编辑页面
+     *
+     * @author ${author}
+     * @Date ${date}
+     */
+    @RequestMapping("/edit")
+    public String edit() {
+        return PREFIX + "/${lowerEntity}_edit.html";
+    }
+}
+
+

@@ -1,0 +1,97 @@
+@layout("/common/_container.html",{title:"代码生成",bg:"bg-white",js:["/assets/gen.js"]}){
+
+<div class="layui-body-header">
+    <span class="layui-body-header-title">代码生成</span>
+</div>
+
+<div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+    <ul class="layui-tab-title">
+        <li class="layui-this" id="code_gen">代码生成</li>
+        <li id="template_config">模板配置</li>
+        <li id="db_config">数据库配置</li>
+    </ul>
+    <div class="layui-tab-content" style="height: 100px;">
+        <div class="layui-tab-item layui-show">
+            <div class="layui-fluid">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-xs12">
+                        <div class="layui-card">
+                            <div class="layui-card-body">
+                                <div class="layui-form">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">作&nbsp;&nbsp;者*</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" id="author" name="author" lay-verify="required" autocomplete="off" placeholder="代码生成注释的作者" class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">包&nbsp;路&nbsp;径*</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" id="proPackage" name="proPackage" lay-verify="required" autocomplete="off" placeholder="项目包名称" class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">表&nbsp;前&nbsp;缀</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" id="removePrefix" name="removePrefix" lay-verify="" autocomplete="off" placeholder="表前缀移除" class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">字段前缀</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" id="removeFieldPrefix" name="removeFieldPrefix" lay-verify="" autocomplete="off" placeholder="字段前缀移除" class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">命名规则</label>
+                                        <div class="layui-input-block">
+                                            <select id="namingStrategy" name="namingStrategy" lay-filter="namingStrategy">
+                                                <option value="underline_to_camel">下划线转驼峰命名</option>
+                                                <option value="nochange">不变</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">实&nbsp;体&nbsp;类</label>
+                                        <div class="layui-input-block">
+                                            <select id="entityLombokModel" name="entityLombokModel" lay-filter="entityLombokModel">
+                                                <option value="lombok">lombok模型</option>
+                                                <option value="getAndSet">Gettes&Settes方法</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">数&nbsp;据&nbsp;源*</label>
+                                        <div class="layui-input-block">
+                                            <select id="dataSourceId" name="dataSourceId" lay-filter="dataSourceId" lay-verify="required">
+                                                <option value=""></option>
+                                                @for(item in dataSources!){
+                                                <option value="${item.dbId}">${item.dbName}</option>
+                                                @}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">数&nbsp;据&nbsp;表*</label>
+                                        <div class="layui-input-block">
+                                            <table class="layui-hide" id="dbTableList" lay-filter="dbTableList"></table>
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <div class="layui-input-block">
+                                            <button class="layui-btn" lay-filter="execute" lay-submit>生成</button>
+                                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-tab-item">加载中...</div>
+        <div class="layui-tab-item">加载中...</div>
+    </div>
+</div>
+@}

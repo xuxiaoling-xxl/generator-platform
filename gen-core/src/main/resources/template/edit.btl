@@ -1,0 +1,112 @@
+    <!DOCTYPE html>
+    <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+    <head>
+        <#include "/common/head.ftl"/>
+    </head>
+    <body class="no-skin">
+        	<div class="page-content">
+        		<div class="page-header">
+        			<h1>${tableComment}管理
+        				<small>
+        					<i class="icon-double-angle-right"></i><#if viewType=='add'>新增<#else>编辑</#if>
+        				</small>
+        			</h1>
+        		</div>
+        		<!-- /.page-header -->
+        		<div class="row">
+                    <div class="col-xs-12">
+                        <form class="form-horizontal" id="gdieForm" action="${$}{path}/${lowerEntity}/save.do" method="post">
+    						<input type="hidden" name="id" value="${$}{(entity.id)!}">
+    						
+							<!-- <div class="row">
+    							 <label class="col-xs-12 col-sm-2 control-label">类型</label>
+    								<div class="col-xs-12 col-sm-3 form-group">
+    									<select class="form-control" name="type">
+    										<option value=""> --请选择-- </option>
+    										<option value="supervise" <#if (entity.type)??&&entity.type=='supervise'>selected</#if>> 督办 </option>									</select>
+    								</div>
+    							</div>-->
+    						
+        					<% for(var i=0 ; i < fieldsNoKey.~size ; i++){ %>
+        					<div class="row">
+        		                <label class="col-xs-12 col-sm-2 control-label">${fieldsNoKey[i].comment}</label>
+        						<div class="col-xs-12 col-sm-3 form-group">
+    								<input class="form-control" type="text" name="${fieldsNoKey[i].propertyName}" value="${$}{(entity.${fieldsNoKey[i].propertyName})!}" placeholder="${fieldsNoKey[i].comment}" <#if (entity.${fieldsNoKey[i].propertyName})??>readonly="readonly"</#if>>
+        						</div>
+        					</div><!-- /.row -->
+        					<% } %>
+        					<div class="row clearfix form-actions">
+        						<div class="col-xs-12 center">
+        							<button class="btn btn-info" type="submit">
+        								<i class="icon-ok bigger-110"></i>提交
+        							</button>
+        							<button class="btn" type="reset" onclick="javascript:history.go(-1);">
+        								<i class="icon-undo bigger-110"></i>返回
+        							</button>
+        						</div>
+        					</div><!-- /.row -->
+                        </form><!-- /.form-horizontal -->
+                    </div><!-- /.col-sm-12 -->
+                </div><!-- /.row -->
+            </div><!-- /.page-content -->
+        	<#include "/common/foot.ftl"/>
+            <script>
+            $(document).ready(function(){
+            	$('#gdieForm').validate({
+                    errorElement: 'div',
+        			errorClass: 'help-block',
+        			focusInvalid: false,
+        			ignore: "",
+               		rules: {
+						/* name:{
+								required: true,
+								maxlength: 50
+							},
+						code:{
+							required: true,
+							maxlength: 50,
+							remote: {
+								url: "./data/checkUniqueByCode.do",
+								type: "post",
+								dataType: "json",
+								data:function(validator){
+									return {id:'${$}{(entity.id)!}'};
+								}
+							}
+						},
+						sort:{
+							digits:true
+						}
+						*/
+					},
+                    highlight: function (e) {
+        				$(e).closest('.form-group').addClass('has-error');
+        			},
+        			success: function (e) {
+        				$(e).closest('.form-group').removeClass('has-error');
+        				$(e).remove();
+        			},
+        			submitHandler: function (form) {
+        			    $.ajax({
+                            url: form.action,
+                            type:(form.method!='')?form.method:'post',
+                            data: $(form).serializeObject(),
+                            dataType : "json",
+                            success: function(data) {
+                            	if(data.code=='200'){
+                            		bootbox.alert({message:data.message,callback:function(){javascript:history.go(-1);}});
+                            	}else{
+                            		bootbox.alert(data.message);
+                            	}
+                            },
+                            error: function(msg) {
+                                bootbox.alert('网络异常');
+                            }
+                        });
+        			}
+                });
+            });
+            </script>
+        </body>
+       </html>
+        	

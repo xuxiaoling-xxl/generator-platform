@@ -1,0 +1,62 @@
+    package ${package.Service};
+    
+    import com.digitalgd.tog.entity.page.PageInfo;
+    import ${package.EntitySpecParams}.${entity}Param;
+    import ${package.EntitySpecResult}.${entity}Result;
+    
+    /**
+     * <p>
+     * $!{table.comment} 服务接口类
+     * </p>
+     *
+     * @author ${author}
+     * @since ${date}
+     */
+    public interface ${table.serviceName} {
+	
+		/**
+		 * 根据条件查询$!{table.comment}记录
+		 * @param param $!{table.comment}实体
+		 * @return
+		 */
+		public ${entity}Result get${entity}(${entity}Param param);
+		
+		/**
+		 * 根据主键获取$!{table.comment}记录
+		 * @param id $!{table.comment}主键
+		 * @return
+		 */
+		public ${entity}Result get${entity}ById(String id);
+	
+		/**
+		 * 根据分页条件查询$!{table.comment}集合和数量
+	 	 * @param param $!{table.comment}实体
+		 * @param current   当前页面数
+		 * @param size      每次查询记录数
+	 	 * @return
+	 	 */
+		public PageInfo<${entity}Result> selectListBy${entity}(${entity}Param param);
+		
+		/**
+		 * 保存$!{table.comment}记录
+		 * @param param $!{table.comment}实体
+		 * @return
+		 */
+		public ${entity}Result save${entity}(${entity}Param param);
+    
+		/**
+		 * 更新$!{table.comment}记录
+		 * @param param $!{table.comment}实体
+		 * @return
+		 */
+		public ${entity}Result update${entity}(${entity}Param param);
+		
+		/**
+		 * 根据主键删除$!{table.comment}记录
+		 * @param id $!{table.comment}主键
+		 * @return
+		 */
+		public Boolean delete${entity}ById(String id);
+		
+    }
+    

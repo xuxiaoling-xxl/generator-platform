@@ -1,0 +1,122 @@
+        package ${package.ServiceImpl};
+    	
+    	import java.util.List;
+    
+    	import org.springframework.beans.factory.annotation.Autowired;
+    	import org.springframework.stereotype.Service;
+    	import org.springframework.transaction.annotation.Transactional;
+    
+    	import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+    	import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+    	import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+    	import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+        
+        import com.digitalgd.tog.core.model.page.PageFactory;
+        import com.digitalgd.tog.entity.page.PageInfo;
+    	import com.digitalgd.tog.core.util.ToolUtil;
+    	
+        import ${package.Entity}.${entity};
+        import ${package.Mapper}.${table.mapperName};
+        import ${package.EntitySpecParams}.${entity}Param;
+        import ${package.EntitySpecResult}.${entity}Result;
+        import ${package.Service}.${table.serviceName};
+        
+        /**
+         * <p>
+         * $!{table.comment} 服务实现类
+         * </p>
+         *
+         * @author ${author}
+         * @since ${date}
+         */
+        @Service
+        @Transactional
+        public class ${table.serviceImplName} extends ServiceImpl<${table.mapperName}, ${entity}> implements ${table.serviceName} {
+    	
+    		@Autowired
+    		private ${table.mapperName} ${entity.toLowerCase()}Mapper;
+    		
+    		@Override
+    		public ${entity}>Result get${entity}>(${entity}Param param) {
+    			${entity}Result result = null;
+    			if(param!=null){
+    				${entity} entity = new ${entity}();
+    				ToolUtil.copyProperties(param,entity);
+    				QueryWrapper<${entity}> queryWrapper = new QueryWrapper<${entity}>(entity);
+    				entity = ${entity.toLowerCase()}Mapper.selectOne(queryWrapper);
+    				if(entity!=null){
+    					 result = new ${entity}Result();
+    					 ToolUtil.copyProperties(entity, result);
+    				}
+    			}
+    			return result;
+    		}
+        
+    		@Override
+    		public ${entity}Result get${entity}ById(String id) {
+    			${entity} entity = ${entity.toLowerCase()}Mapper.selectById(id);
+    			${entity}Result result = null;
+    			if(entity!=null){
+    				 result = new ${entity}Result();
+    				 ToolUtil.copyProperties(entity, result);
+    			}
+    			return result;
+    		}
+    		
+    		@Override
+    		public PageInfo<${entity}Result> selectListBy${entity}(${entity}Param param) {
+    			${entity} entity = new ${entity}();
+    			ToolUtil.copyProperties(param,entity);
+    			QueryWrapper<${entity}> queryWrapper = new QueryWrapper<${entity}>(entity);
+    			Page<${entity}> page = PageFactory.defaultPage();
+    			if(param!=null){
+    				// TODO 查询条件
+					/*if(StringUtils.isNotEmpty(param.getLikeName())){
+						queryWrapper.like(Application.NAME, param.getLikeName());
+					}
+					if(param.isAscSort()){
+						queryWrapper.orderByAsc(Application.SORT);
+					}else if(param.isDescSort()){
+						queryWrapper.orderByDesc(Application.SORT);
+					}*/
+    			}
+    			return  PageFactory.createPageInfo(${lowerEntity}Mapper.selectPage(page, queryWrapper), ${entity}Result.class);
+    		}
+    		
+    		@Override
+    		public ${entity}Result save${entity}(${entity}Param param) {
+    			${entity}Result result = null;
+    			if(param!=null){
+    				${entity} entity = new ${entity}();
+    				ToolUtil.copyProperties(param,entity);
+    				if(${entity.toLowerCase()}Mapper.insert(entity)>0){
+    					result = new ${entity}Result();
+    					ToolUtil.copyProperties(entity,result);
+    				}
+    			}
+    			return result;
+    		}
+    		
+    		@Override
+    		public ${entity}Result update${entity}(${entity}Param param) {
+    			${entity}Result result = null;
+    			if(param!=null&&StringUtils.isNotEmpty(param.getId())){
+    				${entity} entity = new ${entity}();
+    				ToolUtil.copyProperties(param,entity);
+    				if(${entity.toLowerCase()}Mapper.updateById(entity)>0){
+    					result = new ${entity}Result();
+    					ToolUtil.copyProperties(entity,result);
+    				}
+    			}
+    			return result;
+    		}
+    		
+    		@Override
+    		public Boolean delete${entity}ById(String id) {
+    			${entity} entity = new ${entity}();
+    			entity.setId(id);
+    			return (${entity.toLowerCase()}Mapper.deleteById(entity)>0);
+    		}
+    	
+        }
+        

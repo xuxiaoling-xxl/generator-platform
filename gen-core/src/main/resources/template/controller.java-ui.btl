@@ -1,0 +1,84 @@
+    package ${controllerPackage};
+    
+    import org.springframework.stereotype.Controller;
+    import org.springframework.web.bind.annotation.RequestMapping;
+	import org.springframework.beans.factory.annotation.Autowired;
+	import org.springframework.web.bind.annotation.RequestMapping;
+	import org.springframework.web.servlet.ModelAndView;
+	import ${package.Entity}.${entity};
+    import ${package.Service}.${table.serviceName};
+    
+    <% var lowerEntityService = lowerEntity + 'Service'; %>
+    
+    /**
+     * ${tool.cleanWhite(table.comment)}前端页面控制器
+     *
+     * @author ${author}
+     * @Date ${tool.currentTime()}
+     */
+    @Controller
+    @RequestMapping("/${lowerEntity}")
+    public class ${entity}Controller {
+    
+        private final String viewPath = "/${lowerEntity}";
+	    @Autowired
+        private ${entity}Service ${lowerEntityService};
+    
+        /**
+         * 跳转到${tool.cleanWhite(table.comment)}列表页面
+         *
+         * @author ${author}
+         * @Date ${date}
+         */
+		 @RequestMapping("list.do")
+		public ModelAndView listView(${entity} entity){
+			ModelAndView model = new ModelAndView(viewPath+"list");
+			model.addObject("entity",entity);
+			model.addObject("viewType", "list");
+			return model;
+		}
+    
+        /**
+         * ${tool.cleanWhite(table.comment)}新增页面
+         *
+         * @author ${author}
+         * @Date ${date}
+         */
+		 @RequestMapping("add.do")
+		public ModelAndView addView(){
+			ModelAndView model = new ModelAndView(viewPath+"edit");
+			model.addObject("viewType", "add");
+			return model;
+		}
+    
+        /**
+         * ${tool.cleanWhite(table.comment)}编辑页面
+         *
+         * @author ${author}
+         * @Date ${date}
+         */
+		 @RequestMapping("edit.do")
+		public ModelAndView editView(String id){
+			ModelAndView model = new ModelAndView(viewPath+"edit");
+			model.addObject("entity", ${lowerEntityService}.get${entity}ById(id));
+			model.addObject("viewType", "edit");
+			return model;
+		}
+	
+        /**
+         * ${tool.cleanWhite(table.comment)}查看页面
+         *
+         * @author ${author}
+         * @Date ${date}
+         */
+		 @RequestMapping("look.do")
+		public ModelAndView lookView(String id){
+			ModelAndView model = new ModelAndView(viewPath+"look");
+			model.addObject("entity", ${lowerEntityService}.get${entity}ById(id));
+			model.addObject("viewType", "look");
+			return model;
+		}
+    }
+    
+    
+    

@@ -1,0 +1,112 @@
+    package ${controllerPackage};
+	
+	import org.slf4j.Logger;
+	import org.slf4j.LoggerFactory;
+	import org.springframework.beans.factory.annotation.Autowired;
+	import org.springframework.web.bind.annotation.RequestMapping;
+	import org.springframework.web.bind.annotation.RestController;
+	
+	import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
+	import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+    import com.digitalgd.tog.entity.page.PageInfo;
+	import com.digitalgd.tog.entity.reqres.ResponseData;
+	import ${package.EntitySpecParams}.${entity}Param;
+	import ${package.EntitySpecResult}.${entity}Result;
+	import ${package.Service}.${table.serviceName};
+    
+    <% var lowerEntityService = lowerEntity + 'Service'; %>
+    
+    /**
+     * ${tool.cleanWhite(table.comment)}前端数据控制器
+     *
+     * @author ${author}
+     * @Date ${tool.currentTime()}
+     */
+    @RestController
+    @RequestMapping("/${lowerEntity}")
+    public class ${entity}RestController {
+    
+		private static Logger logger = LoggerFactory.getLogger(${entity}RestController.class);
+        @Autowired
+        private ${entity}Service ${lowerEntityService};
+    
+        /**
+         * 查询列表
+         *
+         * @author ${author}
+         * @Date ${date}
+         */
+        @RequestMapping("list.do")
+		public ResponseData list(${entity}Param param){
+			try{
+				PageInfo<${entity}Result> pages= ${lowerEntityService}.selectListBy${entity}(param);
+				return ResponseData.success(pages);
+			}catch(Exception e){
+				logger.error(e.getMessage());
+				return ResponseData.error("查询异常");
+			}
+		}
+    
+        /**
+         * 查看详情
+         *
+         * @author ${author}
+         * @Date ${date}
+         */
+       @RequestMapping("get.do")
+		public ResponseData get(String id){
+			${entity}Result result = null;
+			try{
+				result = ${lowerEntityService}.get${entity}ById(id);
+			}catch(Exception e){
+				logger.error(e.getMessage());
+			}
+			return (result!=null)?ResponseData.success(result):ResponseData.error("查询异常");
+		}
+		
+        /**
+         * 保存
+         *
+         * @author ${author}
+         * @Date ${date}
+         */
+       @RequestMapping("save.do")
+		public ResponseData save(${entity}Param param){
+			try{
+				${entity}Result result = null;
+				if(ObjectUtils.isNotEmpty(param)){
+					if(StringUtils.isNotEmpty(param.getCode())&&StringUtils.isNotEmpty(param.getName())){
+						if(StringUtils.isNotEmpty(param.getId())){
+							result = ${lowerEntityService}.update${entity}(param);
+						}else{
+							result = ${lowerEntityService}.save${entity}(param);
+						}
+					}
+				}
+				return(result!=null)?ResponseData.success(result):ResponseData.error("保存失败");
+			}catch(Exception e){
+				logger.error(e.getMessage());
+				return ResponseData.error("保存失败");
+			}
+		}
+		
+        /**
+         * 删除
+         *
+         * @author ${author}
+         * @Date ${date}
+         */
+       @RequestMapping("delete.do")
+		public ResponseData delete(${entity}Param param){
+			try{
+				return (${lowerEntityService}.delete${entity}ById(param.getId()))?ResponseData.success("删除成功"):ResponseData.error("删除失败");
+			}catch(Exception e){
+				logger.error(e.getMessage());
+				return ResponseData.error("删除异常");
+			}
+		}
+	
+    }
+    
+    
+    

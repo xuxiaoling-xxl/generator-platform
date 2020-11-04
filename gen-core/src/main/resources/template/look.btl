@@ -1,0 +1,36 @@
+    <!DOCTYPE html>
+    <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"  xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+    <head>
+    	<#include "/common/head.ftl"/>
+    </head>
+	<body class="no-skin">
+		<div class="page-content">
+			<div class="page-header">
+				<h1>${tableComment}管理
+					<small>
+						<i class="icon-double-angle-right"></i>查看
+					</small>
+				</h1>
+			</div>
+			<!-- /.page-header -->
+    					 
+			<table class="profile-user-info profile-user-info-striped">
+    		<% for(var i=0 ; i < fieldsNoKey.~size ; i++){ %>
+    			<tr class="profile-info-row">
+    				<td class="profile-info-name">${fieldsNoKey[i].comment}</td>
+    				<td class="profile-info-value">${$}{(entity.${fieldsNoKey[i].propertyName})!}</td>
+    			</tr>
+    		<% } %>
+    		</table><!-- /.profile-user-info -->
+    		<div class="row clearfix form-actio vxns">
+    			<div class="col-xs-12 center">
+    				<button class="btn" type="reset" onclick="javascript:history.go(-1);">
+    					<i class="icon-undo bigger-110"></i>返回
+    				</button>
+    			</div>
+    		</div><!-- /.row -->
+        </div><!-- /.page-content -->
+       <#include "/common/foot.ftl"/>
+       <script>
+    </body>
+    </html>

@@ -1,0 +1,91 @@
+@layout("/common/_container.html",{title:"数据库配置",bg:"bg-white",js:["/assets/db.js"]}){
+<style>
+	.layui-btn-view{
+		background: #1f25dc;
+	}
+</style>
+<div class="layui-body-header">
+    <span class="layui-body-header-title">数据库配置</span>
+</div>
+
+<div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+    <ul class="layui-tab-title">
+        <li id="code_gen">代码生成</li>
+        <li id="template_config">模板配置</li>
+        <li id="db_config" class="layui-this">数据库配置</li>
+    </ul>
+    
+        <!-- 模板弹窗 -->
+	<div id="open_dialog" style="display: none;padding:20px;">
+		<form class="layui-form" lay-filter="dbAddForm">
+		<input type="hidden" id="dbId" name="dbId"/>
+         <div class="layui-form-item">
+             <label class="layui-form-label">名&nbsp;&nbsp;称*</label>
+             <div class="layui-input-block">
+                 <input type="text" name="dbName" id="dbName" lay-verify="required" autocomplete="off" class="layui-input">
+             </div>
+         </div>
+         <div class="layui-form-item">
+             <label class="layui-form-label">类&nbsp;&nbsp;型*</label>
+             <div class="layui-input-block">
+                 <select name="type" id="type">
+                     <option value="yw">业务</option>
+                     <option value="jc">基础</option>
+                 </select>
+             </div>
+         </div>
+         <div class="layui-form-item">
+             <label class="layui-form-label">驱&nbsp;&nbsp;动*</label>
+             <div class="layui-input-block">
+                 <input type="text" name="jdbcDriver" id="jdbcDriver" lay-verify="required" autocomplete="off" class="layui-input">
+             </div>
+         </div>
+         <div class="layui-form-item">
+             <label class="layui-form-label">连&nbsp;&nbsp;接*</label>
+             <div class="layui-input-block">
+                 <input type="text" name="jdbcUrl" id="jdbcUrl" lay-verify="required" autocomplete="off" class="layui-input">
+             </div>
+         </div>
+         <div class="layui-form-item">
+             <label class="layui-form-label">账&nbsp;&nbsp;号*</label>
+             <div class="layui-input-block">
+                 <input type="text" name="userName" id="userName" lay-verify="required" autocomplete="off" class="layui-input">
+             </div>
+         </div>
+         <div class="layui-form-item">
+             <label class="layui-form-label">密&nbsp;&nbsp;码</label>
+             <div class="layui-input-block">
+                 <input type="text" name="password" id="password" lay-verify="" autocomplete="off" class="layui-input">
+             </div>
+         </div>
+         <div class="layui-form-item">
+             <div class="layui-input-block" style="text-align: center;">
+                 <button class="layui-btn" lay-filter="submitDb" lay-submit>提交</button>
+                 <button type="reset" class="layui-btn layui-btn-primary" id="resetBtn">重置</button>
+                 <button class="layui-btn layui-btn-primary" lay-filter="connectVerify" lay-submit>连接测试</button>
+                 <button type="reset" class="layui-btn layui-btn-primary" id="closeDialog">关闭</button>
+             </div>
+         </div>
+     </form>
+	</div>
+    
+    <div class="layui-tab-content" style="height: 100px;">
+     <button type="button" class="layui-btn" id="db_add">
+	  		<i class="layui-icon">&#xe67c;</i>添加数据源
+		</button>
+    
+        <div class="layui-tab-item">加载中...</div>
+        <div class="layui-tab-item layui-show">
+            <table class="layui-hide" id="dbTable" lay-filter="dbTable"></table>
+        </div>
+        <div class="layui-tab-item">加载中...</div>
+    </div>
+</div>
+
+<script type="text/html" id="tableBar">
+	<a class="layui-btn layui-btn-view layui-btn-xs" lay-event="connect">连接测试</a>
+	<a class="layui-btn layui-btn-xs" lay-event="update">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
+</script>
+
+@}

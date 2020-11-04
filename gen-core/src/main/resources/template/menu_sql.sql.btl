@@ -1,0 +1,5 @@
+    <% for(menu in menus!){ %>
+    INSERT INTO `sys_menu`(`menu_id`, `system_id`, `code`, `pcode`, `pcodes`, `menu_name`, `menu_url`, `open_type`, `icon`, `sort`, `levels`, `class_power_id`, `description`, `deleted`, `create_time`, `update_time`, `create_user`, `update_user`) VALUES (${menu.menuId}, 1, '${menu.code}', '${menu.pcode}', '${menu.pcodes}', '${menu.menuName}', '${menu.menuUrl}', 1, '${menu.icon}', ${menu.sort}, ${menu.levels}, null, '${menu.description}', 0 , now(), now(), null, null);
+    <% } %>
+    
+    

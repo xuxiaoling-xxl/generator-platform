@@ -1,0 +1,141 @@
+package ${package.ServiceImpl};
+
+import com.digitalgd.tog.core.model.page.PageFactory;
+import com.digitalgd.tog.entity.page.PageInfo;
+import ${package.Entity}.${entity};
+import ${package.Mapper}.${table.mapperName};
+import ${package.EntitySpecParams}.${entity}Param;
+import ${package.EntitySpecResult}.${entity}Result;
+import ${package.Service}.${table.serviceName};
+import com.digitalgd.tog.core.util.ToolUtil;
+
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import ${superServiceImplClassPackage};
+import org.springframework.stereotype.Service;
+
+import java.io.Serializable;
+import java.util.List;
+import java.util.stream.Collectors;
+
+/**
+ * <p>
+ * $!{table.comment} 服务实现类
+ * </p>
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+@Service
+#if(${kotlin})
+open class ${table.serviceImplName} : ${superServiceImplClass}<${table.mapperName}, ${entity}>(), ${table.serviceName} {
+
+}
+#else
+public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.mapperName}, ${entity}> implements ${table.serviceName} {
+
+    @Override
+    public void add(${entity}Param param){
+        ${entity} entity = getEntity(param);
+        this.save(entity);
+    }
+
+    @Override
+    public void delete(${entity}Param param){
+        this.removeById(getKey(param));
+    }
+
+    @Override
+    public void update(${entity}Param param){
+        ${entity} oldEntity = getOldEntity(param);
+        ${entity} newEntity = getEntity(param);
+        ToolUtil.copyProperties(newEntity, oldEntity);
+        this.updateById(newEntity);
+    }
+
+    @Override
+    public ${entity}Result findBySpec(${entity}Param param){
+    	${entity} entity = getEntity(param);
+        QueryWrapper<${entity}> objectQueryWrapper = new QueryWrapper<>(entity);
+        ${entity} one = this.getOne(objectQueryWrapper);
+        if(one==null){
+        	return null;
+        }
+    	${entity}Result result = new ${entity}Result();
+    	ToolUtil.copyProperties(one, result);
+        return result;
+    }
+
+    @Override
+    public List<${entity}Result> findListBySpec(${entity}Param param){
+		${entity} entity = getEntity(param);
+        QueryWrapper<${entity}> objectQueryWrapper = new QueryWrapper<>(entity);
+        List<${entity}> list = this.list(objectQueryWrapper);
+        if(list!=null) {
+        	return list.stream().map(obj -> {
+        		${entity}Result result = new ${entity}Result();
+        		ToolUtil.copyProperties(obj, result);
+        		return result;
+        	}).collect(Collectors.toList());
+        }
+        return null;
+    }
+
+    @Override
+    public PageInfo<${entity}Result> findPageBySpec(${entity}Param param){
+        Page<${entity}> pageContext = getPageContext();
+        ${entity} entity = getEntity(param);
+        QueryWrapper<${entity}> objectQueryWrapper = new QueryWrapper<>(entity);
+        IPage<${entity}> page = this.page(pageContext, objectQueryWrapper);
+        List<${entity}Result> collect =null;
+        if(page.getRecords()!=null) {
+        	collect = page.getRecords().stream().map(obj -> {
+        		${entity}Result result = new ${entity}Result();
+        		ToolUtil.copyProperties(obj, result);
+        		return result;
+        	}).collect(Collectors.toList());
+        }
+		PageInfo<${entity}Result> result = new PageInfo<>();
+		result.setCount(page.getTotal());
+		result.setData(collect);
+        return result;
+    }
+
+	@Override
+	public ${entity}Result getResultById(Serializable id) {
+		${entity} byId = getById(id);
+		${entity}Result result = new ${entity}Result();
+		ToolUtil.copyProperties(byId, result);
+		return result;
+	}
+
+    private Serializable getKey(${entity}Param param){
+        #set( $haveNoKey = true )
+        #foreach($field in ${table.fields})
+        #if(${field.keyFlag})
+        #set( $haveNoKey = false )
+        return param.get${field.capitalName}();
+        #end
+        #end
+        #if(${haveNoKey})
+        return null;
+        #end
+    }
+
+    private Page<${entity}> getPageContext() {
+        return PageFactory.defaultPage();
+    }
+
+    private ${entity} getOldEntity(${entity}Param param) {
+        return this.getById(getKey(param));
+    }
+
+    private ${entity} getEntity(${entity}Param param) {
+        ${entity} entity = new ${entity}();
+        ToolUtil.copyProperties(param, entity);
+        return entity;
+    }
+
+}
+#end

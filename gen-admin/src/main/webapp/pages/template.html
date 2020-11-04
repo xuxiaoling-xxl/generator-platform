@@ -1,0 +1,104 @@
+@layout("/common/_container.html",{title:"模板配置",bg:"bg-white",js:["/assets/template.js","/assets/editormd/js/editormd.min.js"],css:["/assets/editormd/css/editormd.min.css","/assets/editormd/css/editormd.preview.min.css"]}){
+
+<style>
+	.layui-btn-view{
+		background: #1f25dc;
+	}
+</style>
+
+<div class="layui-body-header">
+    <span class="layui-body-header-title">模板配置</span>
+</div>
+
+<div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+    <ul class="layui-tab-title">
+        <li id="code_gen">代码生成</li>
+        <li id="template_config" class="layui-this">模板配置</li>
+        <li id="db_config">数据库配置</li>
+    </ul>
+    
+    <!-- 模板弹窗 -->
+	<div id="open_dialog" style="display: none;padding:20px;">
+		<form class="layui-form" lay-filter="templateAddForm">
+		<input type="hidden" id="id" name="id">
+		<input type="hidden" id="details" name="details">
+		<input type="hidden" id="status" name="status">
+          <div class="layui-form-item">
+              <label class="layui-form-label">名&nbsp;&nbsp;称*</label>
+              <div class="layui-input-block">
+                  <input type="text" id="name" name="name" lay-verify="required" autocomplete="off" class="layui-input">
+              </div>
+          </div>
+          <div class="layui-form-item">
+              <label class="layui-form-label">命名后缀</label>
+              <div class="layui-input-block">
+                  <input type="text" id="suffix" name="suffix" lay-verify="" autocomplete="off" class="layui-input">
+              </div>
+          </div>
+         <div class="layui-form-item">
+              <label class="layui-form-label">类&nbsp;&nbsp;型*</label>
+              <div class="layui-input-block">
+                  <select id="type" name="type" lay-filter="type" lay-verify="required">
+                      <option value="entity">entity</option>
+                      <option value="model">model</option>
+                      <option value="mapper">mapper</option>
+                      <option value="xml">xml</option>
+                      <option value="controller">controller</option>
+                      <option value="service">service</option>
+                      <option value="serviceImpl">serviceImpl</option>
+                      <option value="js">js</option>
+                      <option value="html">html</option>
+                      <option value="ftl">ftl</option>
+                      <option value="sql">sql</option>
+                  </select>
+              </div>
+          </div>
+           <div class="layui-form-item">
+              <label class="layui-form-label">备&nbsp;&nbsp;注</label>
+              <div class="layui-input-block">
+                  <input type="text" id="comment" name="comment" lay-verify="" autocomplete="off" class="layui-input">
+              </div>
+          </div>
+          <div class="layui-form-item">
+              <label class="layui-form-label">模板内容*</label>
+	      		<div id="template-editormd"></div>
+          </div>
+           <div class="layui-form-item" id="tempFoot">
+               <div class="layui-input-block" style="text-align: center;">
+                   <button class="layui-btn" lay-filter="submitTemp" lay-submit>确定</button>
+                   <button type="reset" class="layui-btn layui-btn-primary" id="closeDialog">取消</button>
+               </div>
+           </div>
+	    </form>
+	</div>
+    
+    <div class="layui-tab-content" style="height: 100px;">
+	    <button type="button" class="layui-btn" id="template_add">
+	  		<i class="layui-icon">&#xe67c;</i>添加模板
+		</button>
+    
+        <div class="layui-tab-item">加载中...</div>
+        <div class="layui-tab-item layui-show">
+            <table class="layui-hide" id="tempTable" lay-filter="tempTable"></table>
+        </div>
+        <div class="layui-tab-item">加载中...</div>
+    </div>
+</div>
+
+<script type="text/html" id="statusBar">
+	<label>
+    	<input type="radio" lay-filter="statusChange" id="{{d.id}}" name="{{d.id}}_radio" value="0" {{ d.status==0 ? "checked='checked'" : ""}}>
+		<span>启用</span>
+	</label>
+	<label style="margin-left:10px;">
+    	<input type="radio" lay-filter="statusChange" id="{{d.id}}" name="{{d.id}}_radio" value="1" {{ d.status==1 ? "checked" : ""}}>
+		<span>停用</span>
+	</label>
+</script>
+<script type="text/html" id="tableBar">
+    <a class="layui-btn layui-btn-view layui-btn-xs" lay-event="view">查看</a>
+    <a class="layui-btn layui-btn-xs" lay-event="update">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
+</script>
+
+@}
